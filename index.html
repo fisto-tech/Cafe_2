@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carlos Brothers | Premium Coffee Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  </head>
+<body class="bg-amber-50">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-sm shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-10 h-10 rounded-full bg-amber-800 flex items-center justify-center mr-3">
+                    <i class="fas fa-coffee text-amber-100 text-lg"></i>
+                </div>
+                <h1 class="heading-font text-2xl font-bold text-amber-900">Carlos Brothers</h1>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="text-amber-900 font-medium hover:text-amber-700 transition-colors">Home</a>
+                <a href="#about" class="text-amber-900 font-medium hover:text-amber-700 transition-colors">Our Story</a>
+                <a href="#menu" class="text-amber-900 font-medium hover:text-amber-700 transition-colors">Menu</a>
+                <a href="#locations" class="text-amber-900 font-medium hover:text-amber-700 transition-colors">Locations</a>
+                <a href="#contact" class="text-amber-900 font-medium hover:text-amber-700 transition-colors">Contact</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button class="bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors font-medium">
+                    Order Online
+                </button>
+                <button class="md:hidden text-amber-900">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="bean-universe" class="relative w-full overflow-hidden bg-black" style="height:100vh;">
+        <canvas id="bean-canvas" class="absolute inset-0 w-full h-full" style="z-index: 1; pointer-events: auto;"></canvas>
+        <div class="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none">
+            <p class="font-bold text-amber-500 text-xs tracking-[0.6em] uppercase mb-6 opacity-0 bean-headline" data-delay="0">The Origin Field</p>
+            <h2 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white text-center leading-tight mb-6 opacity-0 bean-headline heading-font" data-delay="0.1">
+                10,000 Beans.<br><span class="text-amber-500">One Vision.</span>
+            </h2>
+            <p class="text-amber-100/70 text-sm md:text-base max-w-md text-center leading-relaxed opacity-0 bean-headline" data-delay="0.2">
+                Every single bean is hand-selected from a single micro-lot. Move your cursor across the field to explore.
+            </p>
+        </div>
+        <div class="absolute inset-0 pointer-events-none z-5" style="background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.8) 100%);"></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="heading-font text-4xl md:text-5xl font-bold text-amber-900 mb-4">Our Story</h2>
+                <div class="w-24 h-1 bg-amber-500 mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Coffee Beans" 
+                             class="rounded-2xl shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Coffee Roasting" 
+                             class="rounded-2xl shadow-lg mt-8">
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <h3 class="heading-font text-3xl font-bold text-amber-800 mb-6">Three Generations of Coffee Mastery</h3>
+                    <p class="text-gray-700 mb-6">
+                        In 1985, Carlos and his brothers opened their first small coffee shop in Buenos Aires. With a passion for the perfect brew and a commitment to quality, they began a journey that would span generations.
+                    </p>
+                    <p class="text-gray-700 mb-6">
+                        Today, Carlos Brothers operates in over 20 countries, but we still roast our beans in small batches using the same traditional methods Carlos perfected decades ago. Every cup tells our story.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6 mt-10">
+                        <div class="text-center p-6 bg-amber-50 rounded-xl">
+                            <div class="text-amber-700 text-3xl font-bold mb-2">1985</div>
+                            <div class="text-amber-900">Founded in Argentina</div>
+                        </div>
+                        <div class="text-center p-6 bg-amber-50 rounded-xl">
+                            <div class="text-amber-700 text-3xl font-bold mb-2">50+</div>
+                            <div class="text-amber-900">Global Locations</div>
+                        </div>
+                        <div class="text-center p-6 bg-amber-50 rounded-xl">
+                            <div class="text-amber-700 text-3xl font-bold mb-2">3</div>
+                            <div class="text-amber-900">Generations of Excellence</div>
+                        </div>
+                        <div class="text-center p-6 bg-amber-50 rounded-xl">
+                            <div class="text-amber-700 text-3xl font-bold mb-2">100%</div>
+                            <div class="text-amber-900">Ethically Sourced Beans</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu-bg py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="heading-font text-4xl md:text-5xl font-bold text-amber-900 mb-4">Our Menu</h2>
+                <p class="text-amber-800 max-w-2xl mx-auto">From classic espresso to innovative seasonal creations, every drink is crafted with precision and passion.</p>
+                <div class="w-24 h-1 bg-amber-500 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Coffee Item 1 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all hover:scale-105 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1561047029-3000c68339ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Espresso" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-amber-900">Classic Espresso</h3>
+                            <span class="text-amber-700 font-bold">$3.50</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Our signature blend, rich and bold with notes of dark chocolate and caramel.</p>
+                        <button class="w-full bg-amber-100 hover:bg-amber-200 text-amber-800 py-2 rounded-lg transition-colors font-medium">
+                            Add to Order
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Coffee Item 2 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all hover:scale-105 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Cappuccino" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-amber-900">Velvet Cappuccino</h3>
+                            <span class="text-amber-700 font-bold">$4.75</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Perfectly steamed milk over our rich espresso, topped with delicate foam.</p>
+                        <button class="w-full bg-amber-100 hover:bg-amber-200 text-amber-800 py-2 rounded-lg transition-colors font-medium">
+                            Add to Order
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Coffee Item 3 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all hover:scale-105 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Cold Brew" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-amber-900">Artisan Cold Brew</h3>
+                            <span class="text-amber-700 font-bold">$5.25</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Slow-steeped for 18 hours for a smooth, less acidic flavor with hints of nuts and cocoa.</p>
+                        <button class="w-full bg-amber-100 hover:bg-amber-200 text-amber-800 py-2 rounded-lg transition-colors font-medium">
+                            Add to Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="bg-amber-800 hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105">
+                    View Full Menu
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations Section -->
+    <section id="locations" class="py-20 bg-amber-900 text-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4">Our Locations</h2>
+                <p class="text-amber-200 max-w-2xl mx-auto">Find your perfect coffee spot at one of our beautifully designed locations around the world.</p>
+                <div class="w-24 h-1 bg-amber-400 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Location 1 -->
+                <div class="bg-amber-800 rounded-2xl overflow-hidden shadow-lg transform transition-all hover:scale-105">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Buenos Aires Location" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Buenos Aires Flagship</h3>
+                        <p class="text-amber-200 mb-4">Our original location in the heart of Palermo, featuring our roasting facility.</p>
+                        <div class="flex items-center text-amber-300 mb-2">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Av. Santa Fe 3251, Buenos Aires</span>
+                        </div>
+                        <div class="flex items-center text-amber-300">
+                            <i class="fas fa-clock mr-2"></i>
+                            <span>Mon-Sun: 7am - 10pm</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Location 2 -->
+                <div class="bg-amber-800 rounded-2xl overflow-hidden shadow-lg transform transition-all hover:scale-105">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="New York Location" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">New York SoHo</h3>
+                        <p class="text-amber-200 mb-4">Industrial chic meets coffee artistry in the heart of Manhattan.</p>
+                        <div class="flex items-center text-amber-300 mb-2">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>456 Broadway, New York, NY</span>
+                        </div>
+                        <div class="flex items-center text-amber-300">
+                            <i class="fas fa-clock mr-2"></i>
+                            <span>Mon-Fri: 6am - 9pm, Weekends: 7am - 10pm</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Location 3 -->
+                <div class="bg-amber-800 rounded-2xl overflow-hidden shadow-lg transform transition-all hover:scale-105">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Tokyo Location" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Tokyo Ginza</h3>
+                        <p class="text-amber-200 mb-4">Minimalist design with traditional Japanese elements in the upscale Ginza district.</p>
+                        <div class="flex items-center text-amber-300 mb-2">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Ginza 6-chōme, Chūō-ku, Tokyo</span>
+                        </div>
+                        <div class="flex items-center text-amber-300">
+                            <i class="fas fa-clock mr-2"></i>
+                            <span>Mon-Sun: 8am - 8pm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="bg-amber-500 hover:bg-amber-400 text-amber-900 font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105">
+                    View All Locations
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="heading-font text-4xl md:text-5xl font-bold text-amber-900 mb-4">Get In Touch</h2>
+                <p class="text-gray-700 max-w-2xl mx-auto">Have questions about our coffee, locations, or catering services? We'd love to hear from you.</p>
+                <div class="w-24 h-1 bg-amber-500 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-amber-900 font-medium mb-2">Your Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="John Doe">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-amber-900 font-medium mb-2">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="john@example.com">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-amber-900 font-medium mb-2">Your Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Tell us how we can help..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-amber-800 hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <div class="bg-amber-50 rounded-2xl p-8 h-full">
+                        <h3 class="text-2xl font-bold text-amber-900 mb-6">Contact Information</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="bg-amber-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-map-marker-alt text-amber-700"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-amber-900">Our Main Office</h4>
+                                    <p class="text-amber-800">Av. Santa Fe 3251, Buenos Aires, Argentina</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-amber-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-phone text-amber-700"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-amber-900">Phone Number</h4>
+                                    <p class="text-amber-800">+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-amber-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-envelope text-amber-700"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-amber-900">Email Address</h4>
+                                    <p class="text-amber-800">hello@carlosbrothers.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-amber-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-clock text-amber-700"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-amber-900">Business Hours</h4>
+                                    <p class="text-amber-800">Monday - Friday: 9am - 6pm<br>Saturday: 10am - 4pm</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 pt-8 border-t border-amber-200">
+                            <h4 class="font-bold text-amber-900 mb-4">Follow Us</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="bg-amber-100 hover:bg-amber-200 text-amber-800 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="bg-amber-100 hover:bg-amber-200 text-amber-800 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="bg-amber-100 hover:bg-amber-200 text-amber-800 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="bg-amber-100 hover:bg-amber-200 text-amber-800 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                                    <i class="fab fa-tiktok"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-amber-950 text-amber-200 py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-amber-700 flex items-center justify-center mr-3">
+                            <i class="fas fa-coffee text-amber-100 text-lg"></i>
+                        </div>
+                        <h2 class="heading-font text-2xl font-bold text-amber-100">Carlos Brothers</h2>
+                    </div>
+                    <p class="mt-2 text-amber-400">Crafting exceptional coffee since 1985</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-amber-400 hover:text-amber-300 transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-amber-400 hover:text-amber-300 transition-colors">Terms of Service</a>
+                    <a href="#" class="text-amber-400 hover:text-amber-300 transition-colors">Careers</a>
+                </div>
+            </div>
+            
+            <div class="border-t border-amber-800 mt-8 pt-8 text-center text-amber-500">
+                <p>&copy; 2023 Carlos Brothers Coffee Co. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 bg-amber-700 hover:bg-amber-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all opacity-0 transform translate-y-10">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Three.js & GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script src="script.js"></script>
+    <script src="sections.js"></script>
+</body>
