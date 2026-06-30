@@ -1,14 +1,41 @@
 // Initialize GSAP and ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
+// Simple text preloader
+function initTextPreloader() {
+    const preloader = document.getElementById('text-preloader');
+    const progressText = document.getElementById('progress-text');
+    
+    if (!preloader || !progressText) return;
+
+    let progress = { value: 0 };
+    
+    gsap.to(progress, {
+        value: 100,
+        duration: 2, // 2 seconds loading simulation
+        ease: "power1.inOut",
+        onUpdate: function() {
+            progressText.innerText = Math.round(progress.value) + '%';
+        },
+        onComplete: function() {
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 700); // Matches the duration-700 CSS class
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initTextPreloader);
+
 // Back to top button
 const backToTopButton = document.getElementById('backToTop');
 
 window.addEventListener('scroll', () => {
     if (window.pageYOffset > 300) {
-        gsap.to(backToTopButton, { opacity: 1, y: 0, duration: 0.3 });
+        gsap.to(backToTopButton, { autoAlpha: 1, y: 0, duration: 0.3, pointerEvents: 'auto' });
     } else {
-        gsap.to(backToTopButton, { opacity: 0, y: 10, duration: 0.3 });
+        gsap.to(backToTopButton, { autoAlpha: 0, y: 10, duration: 0.3, pointerEvents: 'none' });
     }
 });
 
