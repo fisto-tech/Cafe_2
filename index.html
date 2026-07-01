@@ -7,12 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&family=Bebas+Neue&family=Great+Vibes&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css">
   </head>
-<body class="bg-amber-50">
+<body class="bg-amber-50 overflow-x-hidden">
     <!-- Text Preloader -->
     <div id="text-preloader" class="fixed inset-0 z-[9999] bg-amber-950 flex flex-col items-center justify-center transition-opacity duration-700">
         <div class="text-amber-500 heading-font text-3xl md:text-5xl tracking-widest font-bold">
@@ -21,33 +23,33 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full top-0 z-50 bg-white border-b border-amber-900/10 transition-all duration-300 shadow-sm">
-        <div class="container mx-auto px-6 h-16 flex justify-between items-center">
+    <nav class="fixed left-0 right-0 top-0 z-50 bg-white border-b border-amber-900/10 transition-all duration-300 shadow-sm">
+        <div class="container mx-auto px-4 md:px-6 h-16 md:h-20 flex justify-between items-center">
             
             <!-- Left Logo -->
-            <div class="flex-1 flex items-center justify-start cursor-pointer group">
-                <div class="flex flex-col items-start">
-                    <div class="flex items-center gap-3">
-                        <img src="assets/Logo/nav_logo.webp" alt="Carlos Brothers Logo" class="h-16 w-auto object-contain group-hover:scale-110 transition-transform duration-500 py-1">
+            <div class="flex-1 flex items-center justify-start cursor-pointer group min-w-0">
+                <div class="flex flex-col items-start min-w-0">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <img src="assets/Logo/nav_logo.webp" alt="Carlos Brothers Logo" class="h-8 md:h-12 lg:h-16 max-w-[140px] sm:max-w-[180px] lg:max-w-none w-auto object-contain group-hover:scale-110 transition-transform duration-500 py-1">
                     </div>
                 </div>
             </div>
 
             <!-- Center Links -->
-            <div class="hidden lg:flex flex-none justify-center space-x-6 xl:space-x-10 items-center h-10">
-                <a href="#bean-universe" class="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-900 hover:text-amber-500 transition-colors duration-300">
+            <div id="desktop-nav-links" class="hidden lg:flex flex-none justify-center space-x-6 xl:space-x-10 items-center h-10 relative">
+                <a href="#bean-universe" class="nav-link relative z-10 text-[11px] font-bold uppercase tracking-[0.2em] text-amber-900 hover:text-amber-500 transition-colors duration-300">
                     Home
                 </a>
-                <a href="#about" class="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-900 hover:text-amber-500 transition-colors duration-300">
+                <a href="#crafted-about" class="nav-link relative z-10 text-[11px] font-bold uppercase tracking-[0.2em] text-amber-900 hover:text-amber-500 transition-colors duration-300">
                     Our Story
                 </a>
-                <a href="#menu" class="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-900 hover:text-amber-500 transition-colors duration-300">
-                    Menu
+                <a href="#journey" class="nav-link relative z-10 text-[11px] font-bold uppercase tracking-[0.2em] text-amber-900 hover:text-amber-500 transition-colors duration-300">
+                    Journey
                 </a>
-                <a href="#locations" class="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-900 hover:text-amber-500 transition-colors duration-300">
+                <a href="#locations-interactive" class="nav-link relative z-10 text-[11px] font-bold uppercase tracking-[0.2em] text-amber-900 hover:text-amber-500 transition-colors duration-300">
                     Locations
                 </a>
-                <a href="#contact" class="text-[11px] font-bold uppercase tracking-[0.2em] text-amber-900 hover:text-amber-500 transition-colors duration-300">
+                <a href="#contact" class="nav-link relative z-10 text-[11px] font-bold uppercase tracking-[0.2em] text-amber-900 hover:text-amber-500 transition-colors duration-300">
                     Contact
                 </a>
             </div>
@@ -63,16 +65,31 @@
             </div>
 
             <!-- Mobile Actions (Right on Mobile) -->
-            <div class="lg:hidden flex items-center space-x-4">
+            <div class="lg:hidden flex-1 flex justify-end items-center space-x-4">
                 <button class="text-amber-900 hover:text-amber-600 transition-colors p-2">
                     <i class="fas fa-shopping-bag text-xl"></i>
                 </button>
-                <button class="text-amber-900 hover:text-amber-600 transition-colors p-2 -mr-2">
+                <button id="mobile-menu-btn" class="text-amber-900 hover:text-amber-600 transition-colors p-2">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu Backdrop -->
+    <div id="mobile-menu-backdrop" class="fixed inset-0 z-[90] bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none" style="display: none;"></div>
+    
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-[80vw] max-w-[300px] z-[100] bg-white flex flex-col justify-center items-center space-y-6 shadow-2xl overflow-hidden" style="display: none; transform: translateX(100%);">
+        <button id="mobile-menu-close" class="absolute top-4 right-4 text-amber-900 p-2">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+        <a href="#bean-universe" class="mobile-link w-full text-center text-lg font-bold uppercase tracking-widest text-amber-900 hover:text-amber-600 transition-colors px-6">Home</a>
+        <a href="#crafted-about" class="mobile-link w-full text-center text-lg font-bold uppercase tracking-widest text-amber-900 hover:text-amber-600 transition-colors px-6">Our Story</a>
+        <a href="#journey" class="mobile-link w-full text-center text-lg font-bold uppercase tracking-widest text-amber-900 hover:text-amber-600 transition-colors px-6">Journey</a>
+        <a href="#locations-interactive" class="mobile-link w-full text-center text-lg font-bold uppercase tracking-widest text-amber-900 hover:text-amber-600 transition-colors px-6">Locations</a>
+        <a href="#contact" class="mobile-link w-full text-center text-lg font-bold uppercase tracking-widest text-amber-900 hover:text-amber-600 transition-colors px-6">Contact</a>
+    </div>
 
     <!-- Hero Section -->
     <section id="bean-universe" class="relative w-full overflow-hidden bg-black" style="height:100vh;">
@@ -89,341 +106,786 @@
         <div class="absolute inset-0 pointer-events-none z-5" style="background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.8) 100%);"></div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="heading-font text-4xl md:text-5xl font-bold text-amber-900 mb-4">Our Story</h2>
-                <div class="w-24 h-1 bg-amber-500 mx-auto"></div>
-            </div>
-            
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="md:w-1/2">
-                    <div class="grid grid-cols-2 gap-4">
-                        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                             alt="Coffee Beans" 
-                             class="rounded-2xl shadow-lg">
-                        <img src="https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                             alt="Coffee Roasting" 
-                             class="rounded-2xl shadow-lg mt-8">
+    <!-- Process Sequence Section -->
+    <section id="process-sequence" class="relative w-full h-screen bg-black overflow-hidden z-20">
+        <!-- Canvas for Video Frames -->
+        <canvas id="process-canvas" class="absolute inset-0 w-full h-full object-cover z-0"></canvas>
+        
+        <!-- Left Gate -->
+        <div id="gate-left" class="absolute inset-y-0 left-0 w-1/2 z-10 overflow-hidden">
+            <img src="assets/coffee_process.webp" alt="Process Left" class="absolute inset-y-0 left-0 h-full max-w-none w-[100vw] object-cover object-center pointer-events-none">
+        </div>
+        
+        <!-- Right Gate -->
+        <div id="gate-right" class="absolute inset-y-0 right-0 w-1/2 z-10 overflow-hidden">
+            <img src="assets/coffee_process.webp" alt="Process Right" class="absolute inset-y-0 right-0 h-full max-w-none w-[100vw] object-cover object-center pointer-events-none">
+        </div>
+    </section>
+
+
+    <!-- Crafted About Section -->
+    <section id="crafted-about" class="py-16 md:py-24 lg:min-h-screen lg:flex lg:items-center" style="background-color: #f7f3ec;">
+        <div class="container mx-auto px-6 lg:px-12 w-full">
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+                
+                <!-- Left Content -->
+                <div class="lg:w-[35%] flex flex-col items-start">
+                    <span class="text-amber-800 text-xs font-bold uppercase tracking-[0.15em] mb-4 border-b border-amber-800 pb-1">About Us</span>
+                    <h2 class="text-6xl md:text-7xl lg:text-[5rem] text-[#3e2723] leading-[0.85] mb-2" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.02em;">
+                        CRAFTED<br>FROM NATURE,
+                    </h2>
+                    <div class="text-amber-700 text-5xl md:text-6xl mb-6" style="font-family: 'Great Vibes', cursive;">
+                        Brewed for You
+                    </div>
+                    <p class="text-gray-700 text-sm leading-relaxed mb-8 max-w-sm font-medium">
+                        We source the finest coffee beans from sustainable farms around the world and roast them to perfection. Every bean tells a story.
+                    </p>
+                    <a href="#menu" class="inline-flex items-center justify-center gap-3 bg-[#3e2723] hover:bg-[#2c1b18] text-white text-[11px] font-bold uppercase tracking-[0.2em] py-4 px-8 rounded-md transition-colors duration-300">
+                        Explore Our Coffees <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Middle Features -->
+                <div class="lg:w-[25%] flex flex-col gap-6 w-full">
+                    <!-- Feature 1 -->
+                    <div class="flex items-start gap-4 pb-6 border-b border-amber-900/10">
+                        <div class="text-amber-800 text-xl mt-1 w-6 flex justify-center">
+                            <i data-lucide="leaf"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-[#3e2723] font-bold text-sm tracking-wide uppercase mb-1">Sustainably Grown</h4>
+                            <p class="text-gray-600 text-xs leading-relaxed">Eco-friendly farms,<br>better future.</p>
+                        </div>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="flex items-start gap-4 pb-6 border-b border-amber-900/10">
+                        <div class="text-amber-800 text-xl mt-1 w-6 flex justify-center">
+                            <i data-lucide="handshake"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-[#3e2723] font-bold text-sm tracking-wide uppercase mb-1">Fairly Traded</h4>
+                            <p class="text-gray-600 text-xs leading-relaxed">Supporting farmers,<br>building communities.</p>
+                        </div>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="flex items-start gap-4 pb-6 border-b border-amber-900/10">
+                        <div class="text-amber-800 text-xl mt-1 w-6 flex justify-center">
+                            <i data-lucide="flame"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-[#3e2723] font-bold text-sm tracking-wide uppercase mb-1">Expertly Roasted</h4>
+                            <p class="text-gray-600 text-xs leading-relaxed">Precision roasting for<br>rich, bold flavors.</p>
+                        </div>
+                    </div>
+                    <!-- Feature 4 -->
+                    <div class="flex items-start gap-4">
+                        <div class="text-amber-800 text-xl mt-1 w-6 flex justify-center">
+                            <i data-lucide="coffee"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-[#3e2723] font-bold text-sm tracking-wide uppercase mb-1">Made With Passion</h4>
+                            <p class="text-gray-600 text-xs leading-relaxed">Every blend, crafted<br>with love and care.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Image -->
+                <div class="lg:w-[40%] w-full">
+                    <div class="relative w-full aspect-[4/5] rounded-[40px] rounded-br-[10px] overflow-hidden shadow-2xl">
+                        <img src="assets/Images/brew_haven_coffee_bag.webp" 
+                             alt="Brew Haven Coffee Bag" 
+                             class="w-full h-full object-cover">
                     </div>
                 </div>
                 
-                <div class="md:w-1/2">
-                    <h3 class="heading-font text-3xl font-bold text-amber-800 mb-6">Three Generations of Coffee Mastery</h3>
-                    <p class="text-gray-700 mb-6">
-                        In 1985, Carlos and his brothers opened their first small coffee shop in Buenos Aires. With a passion for the perfect brew and a commitment to quality, they began a journey that would span generations.
-                    </p>
-                    <p class="text-gray-700 mb-6">
-                        Today, Carlos Brothers operates in over 20 countries, but we still roast our beans in small batches using the same traditional methods Carlos perfected decades ago. Every cup tells our story.
-                    </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="relative bg-[#24130d] py-16 lg:py-20">
+
+        <div class="container mx-auto px-6 lg:px-12 w-full max-w-[1600px]">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Stat 1 -->
+                <div class="border border-[#4a3227] rounded-xl p-6 flex items-center gap-5 bg-transparent hover:bg-white/5 transition-colors duration-300">
+                    <div class="w-[70px] h-[70px] rounded-full bg-[#8D5833] flex items-center justify-center flex-shrink-0 shadow-lg">
+                        <i data-lucide="bean" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="text-4xl lg:text-[40px] font-serif text-white leading-none mb-1 stat-number" data-target="25" data-suffix="+">0+</div>
+                        <div class="text-[11px] font-bold uppercase tracking-widest text-white mb-2 leading-none">Blends</div>
+                        <div class="text-[13px] text-[#a3948e] leading-snug font-medium">A variety for every<br>coffee lover.</div>
+                    </div>
+                </div>
+
+                <!-- Stat 2 -->
+                <div class="border border-[#4a3227] rounded-xl p-6 flex items-center gap-5 bg-transparent hover:bg-white/5 transition-colors duration-300">
+                    <div class="w-[70px] h-[70px] rounded-full bg-[#8D5833] flex items-center justify-center flex-shrink-0 shadow-lg">
+                        <i data-lucide="globe" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="text-4xl lg:text-[40px] font-serif text-white leading-none mb-1 stat-number" data-target="40" data-suffix="+">0+</div>
+                        <div class="text-[11px] font-bold uppercase tracking-widest text-white mb-2 leading-none">Countries</div>
+                        <div class="text-[13px] text-[#a3948e] leading-snug font-medium">Sourced from the best<br>coffee regions.</div>
+                    </div>
+                </div>
+
+                <!-- Stat 3 -->
+                <div class="border border-[#4a3227] rounded-xl p-6 flex items-center gap-5 bg-transparent hover:bg-white/5 transition-colors duration-300">
+                    <div class="w-[70px] h-[70px] rounded-full bg-[#8D5833] flex items-center justify-center flex-shrink-0 shadow-lg">
+                        <i data-lucide="coffee" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="text-4xl lg:text-[40px] font-serif text-white leading-none mb-1 stat-number" data-target="100" data-suffix="%">0%</div>
+                        <div class="text-[11px] font-bold uppercase tracking-widest text-white mb-2 leading-none">Quality</div>
+                        <div class="text-[13px] text-[#a3948e] leading-snug font-medium">Premium beans.<br>Exceptional taste.</div>
+                    </div>
+                </div>
+
+                <!-- Stat 4 -->
+                <div class="border border-[#4a3227] rounded-xl p-6 flex items-center gap-5 bg-transparent hover:bg-white/5 transition-colors duration-300">
+                    <div class="w-[70px] h-[70px] rounded-full bg-[#8D5833] flex items-center justify-center flex-shrink-0 shadow-lg">
+                        <i data-lucide="heart" fill="currentColor" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="text-4xl lg:text-[40px] font-serif text-white leading-none mb-1 stat-number" data-target="50" data-suffix="K+">0K+</div>
+                        <div class="text-[11px] font-bold uppercase tracking-widest text-white mb-2 leading-none">Happy Brewers</div>
+                        <div class="text-[13px] text-[#a3948e] leading-snug font-medium">Loved by thousands<br>of coffee enthusiasts.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signature Coffees Section -->
+    <section id="signature-coffees" class="py-24 bg-[#0a0503] text-white">
+        <div class="container mx-auto px-6 lg:px-12 max-w-[1600px]">
+            <!-- Header -->
+            <div class="text-center mb-16">
+                <div class="flex items-center justify-center gap-4 mb-4">
+                    <div class="w-12 h-px bg-[#8D5833]/50"></div>
+                    <span class="text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase text-[#8D5833]">Our Signature Coffees</span>
+                    <div class="w-12 h-px bg-[#8D5833]/50"></div>
+                </div>
+                <h2 class="text-4xl md:text-6xl font-serif mb-6">Crafted for Every <span class="text-[#8D5833]">Coffee</span> Lover</h2>
+                <p class="text-gray-400 font-medium">Discover our handpicked blends, brewed to perfection.</p>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                
+                <!-- Card 1 -->
+                <div class="relative overflow-hidden rounded-2xl border border-[#4a3227] bg-[#140a06] p-8 h-[450px] flex flex-col justify-between group hover:border-[#8D5833] transition-colors duration-500 cursor-pointer">
+                    <!-- Top Row -->
+                    <div class="flex justify-between items-start z-10 relative">
+                        <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400">No. 01</span>
+                        <div class="w-6 h-6 rounded-full border border-gray-600 flex items-center justify-center group-hover:border-[#8D5833] transition-colors">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-600 group-hover:bg-[#8D5833] transition-colors"></div>
+                        </div>
+                    </div>
                     
-                    <div class="grid grid-cols-2 gap-6 mt-10">
-                        <div class="text-center p-6 bg-amber-50 rounded-xl">
-                            <div class="text-amber-700 text-3xl font-bold mb-2">1985</div>
-                            <div class="text-amber-900">Founded in Argentina</div>
-                        </div>
-                        <div class="text-center p-6 bg-amber-50 rounded-xl">
-                            <div class="text-amber-700 text-3xl font-bold mb-2">50+</div>
-                            <div class="text-amber-900">Global Locations</div>
-                        </div>
-                        <div class="text-center p-6 bg-amber-50 rounded-xl">
-                            <div class="text-amber-700 text-3xl font-bold mb-2">3</div>
-                            <div class="text-amber-900">Generations of Excellence</div>
-                        </div>
-                        <div class="text-center p-6 bg-amber-50 rounded-xl">
-                            <div class="text-amber-700 text-3xl font-bold mb-2">100%</div>
-                            <div class="text-amber-900">Ethically Sourced Beans</div>
+                    <!-- Image Area (Absolute) -->
+                    <div class="absolute inset-y-0 -right-8 w-[85%] z-0 pointer-events-none" style="-webkit-mask-image: radial-gradient(circle at 50% 55%, black 20%, transparent 70%); mask-image: radial-gradient(circle at 50% 55%, black 20%, transparent 70%);">
+                        <img src="assets/Images/velvet_latte.webp" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" alt="Velvet Latte">
+                    </div>
+                    <!-- Gradient overlay for text readability at bottom -->
+                    <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#140a06] via-[#140a06]/80 to-transparent z-0 pointer-events-none"></div>
+                    
+                    <!-- Middle Content -->
+                    <div class="z-10 relative mt-auto mb-12 w-[75%] lg:w-[70%]">
+                        <h3 class="text-2xl lg:text-3xl font-serif text-white mb-2 uppercase tracking-wide">Velvet Latte</h3>
+                        <p class="text-[10px] font-bold text-[#8D5833] uppercase tracking-[0.15em] mb-4">Smooth & Creamy</p>
+                        <div class="w-8 h-[1px] bg-[#4a3227] mb-6"></div>
+                        <p class="text-xs text-gray-400 leading-relaxed pr-2">Silky espresso blended with steamed milk and a touch of vanilla sweetness. Comfort in every sip.</p>
+                    </div>
+                    
+                    <!-- Bottom Row -->
+                    <div class="flex justify-between items-end z-10 relative">
+                        <span class="text-2xl font-serif text-white">$24</span>
+                        <button class="text-[11px] font-bold text-gray-400 tracking-[0.2em] uppercase group-hover:text-white transition-colors flex items-center gap-2">
+                            Add <i data-lucide="plus" class="w-4 h-4 group-hover:text-[#8D5833] transition-colors"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="relative overflow-hidden rounded-2xl border border-[#4a3227] bg-[#140a06] p-8 h-[450px] flex flex-col justify-between group hover:border-[#8D5833] transition-colors duration-500 cursor-pointer">
+                    <!-- Top Row -->
+                    <div class="flex justify-between items-start z-10 relative">
+                        <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400">No. 02</span>
+                        <div class="w-6 h-6 rounded-full border border-gray-600 flex items-center justify-center group-hover:border-[#8D5833] transition-colors">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-600 group-hover:bg-[#8D5833] transition-colors"></div>
                         </div>
                     </div>
+                    
+                    <!-- Image Area (Absolute) -->
+                    <div class="absolute inset-y-0 -right-8 w-[85%] z-0 pointer-events-none" style="-webkit-mask-image: radial-gradient(circle at 50% 55%, black 20%, transparent 70%); mask-image: radial-gradient(circle at 50% 55%, black 20%, transparent 70%);">
+                        <img src="assets/Images/caramel_macchiato.webp" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" alt="Caramel Macchiato">
+                    </div>
+                    <!-- Gradient overlay for text readability at bottom -->
+                    <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#140a06] via-[#140a06]/80 to-transparent z-0 pointer-events-none"></div>
+                    
+                    <!-- Middle Content -->
+                    <div class="z-10 relative mt-auto mb-12 w-[75%] lg:w-[70%]">
+                        <h3 class="text-2xl lg:text-3xl font-serif text-white mb-2 uppercase tracking-wide">Caramel Macchiato</h3>
+                        <p class="text-[10px] font-bold text-[#8D5833] uppercase tracking-[0.15em] mb-4">Rich & Indulgent</p>
+                        <div class="w-8 h-[1px] bg-[#4a3227] mb-6"></div>
+                        <p class="text-xs text-gray-400 leading-relaxed pr-2">Bold espresso with silky milk, finished with smooth caramel drizzle for the perfect balance of rich and sweet.</p>
+                    </div>
+                    
+                    <!-- Bottom Row -->
+                    <div class="flex justify-between items-end z-10 relative">
+                        <span class="text-2xl font-serif text-white">$24</span>
+                        <button class="text-[11px] font-bold text-gray-400 tracking-[0.2em] uppercase group-hover:text-white transition-colors flex items-center gap-2">
+                            Add <i data-lucide="plus" class="w-4 h-4 group-hover:text-[#8D5833] transition-colors"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="relative overflow-hidden rounded-2xl border border-[#4a3227] bg-[#140a06] p-8 h-[450px] flex flex-col justify-between group hover:border-[#8D5833] transition-colors duration-500 cursor-pointer">
+                    <!-- Top Row -->
+                    <div class="flex justify-between items-start z-10 relative">
+                        <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400">No. 03</span>
+                        <div class="w-6 h-6 rounded-full border border-gray-600 flex items-center justify-center group-hover:border-[#8D5833] transition-colors">
+                            <div class="w-1.5 h-1.5 rounded-full bg-gray-600 group-hover:bg-[#8D5833] transition-colors"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Area (Absolute) -->
+                    <div class="absolute inset-y-0 -right-8 w-[85%] z-0 pointer-events-none" style="-webkit-mask-image: radial-gradient(circle at 50% 55%, black 20%, transparent 70%); mask-image: radial-gradient(circle at 50% 55%, black 20%, transparent 70%);">
+                        <img src="assets/Images/hazelnut_mocha.webp" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" alt="Hazelnut Mocha">
+                    </div>
+                    <!-- Gradient overlay for text readability at bottom -->
+                    <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#140a06] via-[#140a06]/80 to-transparent z-0 pointer-events-none"></div>
+                    
+                    <!-- Middle Content -->
+                    <div class="z-10 relative mt-auto mb-12 w-[75%] lg:w-[70%]">
+                        <h3 class="text-2xl lg:text-3xl font-serif text-white mb-2 uppercase tracking-wide">Hazelnut Mocha</h3>
+                        <p class="text-[10px] font-bold text-[#8D5833] uppercase tracking-[0.15em] mb-4">Warm & Nutty</p>
+                        <div class="w-8 h-[1px] bg-[#4a3227] mb-6"></div>
+                        <p class="text-xs text-gray-400 leading-relaxed pr-2">Rich chocolate and espresso blended with hazelnut flavor, finished with a smooth, chocolatey foam.</p>
+                    </div>
+                    
+                    <!-- Bottom Row -->
+                    <div class="flex justify-between items-end z-10 relative">
+                        <span class="text-2xl font-serif text-white">$24</span>
+                        <button class="text-[11px] font-bold text-gray-400 tracking-[0.2em] uppercase group-hover:text-white transition-colors flex items-center gap-2">
+                            Add <i data-lucide="plus" class="w-4 h-4 group-hover:text-[#8D5833] transition-colors"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Explore Button -->
+            <div class="mt-16 flex flex-col items-center justify-center">
+                <div class="flex items-center gap-3 mb-6 text-gray-400 text-xs">
+                    <i data-lucide="bean" class="w-4 h-4 text-[#8D5833]"></i> Not sure which to choose? <i data-lucide="bean" class="w-4 h-4 text-[#8D5833]"></i>
+                </div>
+                <a href="#menu" class="inline-flex items-center justify-center gap-3 bg-[#8D5833] hover:bg-[#6c4224] text-white text-[11px] font-bold uppercase tracking-[0.2em] py-4 px-10 rounded-md transition-colors duration-300">
+                    Explore All Blends <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Journey Section -->
+    <section id="journey" class="py-24 bg-[#0d0705] text-white relative border-t border-[#4a3227]/30">
+        
+        <!-- Top Header -->
+        <div class="container mx-auto px-6 lg:px-12 max-w-[1400px] mb-24 relative z-10">
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="md:w-1/2">
+                    <span class="text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase text-[#8D5833] mb-6 block">Our Journey</span>
+                    <h2 class="text-4xl md:text-6xl font-serif mb-6 leading-tight">From Bean to<br><span class="text-[#8D5833]">Beautiful Moments</span></h2>
+                    <p class="text-gray-400 font-medium mb-8 max-w-md text-sm md:text-base leading-relaxed">Every great cup of coffee has a story.<br>Here's ours – a journey of passion,<br>dedication, and love for the perfect brew.</p>
+                    <div class="flex items-center gap-3 text-sm text-[#8D5833] font-serif italic">
+                        <i data-lucide="leaf" class="w-5 h-5"></i>
+                        <span>Crafted with care. Brewed for you.</span>
+                    </div>
+                </div>
+                <div class="md:w-1/2 relative h-[300px] md:h-[400px] w-full hidden md:block">
+                    <!-- Right background image with fade -->
+                    <div class="absolute inset-y-0 right-[-10%] w-[140%] pointer-events-none" style="-webkit-mask-image: linear-gradient(to right, transparent, black 60%); mask-image: linear-gradient(to right, transparent, black 60%);">
+                        <img src="./assets/Journey/Journey_hero.webp" class="w-full h-[150%] object-cover -mt-[15%] opacity-90" alt="Coffee cup on table">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Container -->
+        <div class="container mx-auto px-6 lg:px-12 max-w-[1200px] relative z-10">
+            
+            <!-- Center Line -->
+            <div class="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-px bg-[#8D5833]/30 hidden md:block z-0"></div>
+
+            <!-- Item 1 -->
+            <div class="flex flex-col md:flex-row items-center justify-between mb-20 md:mb-32 relative group">
+                <div class="md:w-[45%] mb-8 md:mb-0 w-full">
+                    <img src="assets/Journey/Journey_1.webp" alt="Origin" class="w-full h-64 object-cover rounded-2xl shadow-2xl border border-[#4a3227]/50 group-hover:border-[#8D5833] transition-colors duration-500">
+                </div>
+                
+                <div class="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center hidden md:flex z-10 bg-[#0d0705] py-4">
+                    <div class="w-14 h-14 rounded-full border border-[#8D5833] flex items-center justify-center text-[#8D5833] font-serif text-xl bg-[#0d0705] group-hover:bg-[#8D5833] group-hover:text-white transition-colors duration-300">01</div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-[#8D5833] absolute -bottom-6"></div>
+                </div>
+                
+                <div class="md:w-[45%] md:pl-16 w-full">
+                    <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#8D5833] mb-3 block">The Origin</span>
+                    <h3 class="text-3xl font-serif text-white mb-4 group-hover:text-[#8D5833] transition-colors duration-300">Sourced with Purpose</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Our journey begins in the world's finest coffee growing regions. We partner with farmers who share our commitment to sustainability and ethical practices.</p>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="flex flex-col md:flex-row-reverse items-center justify-between mb-20 md:mb-32 relative group">
+                <div class="md:w-[45%] mb-8 md:mb-0 w-full">
+                    <img src="assets/Journey/Journey_2.webp" alt="Selection" class="w-full h-64 object-cover rounded-2xl shadow-2xl border border-[#4a3227]/50 group-hover:border-[#8D5833] transition-colors duration-500">
+                </div>
+                
+                <div class="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center hidden md:flex z-10 bg-[#0d0705] py-4">
+                    <div class="w-14 h-14 rounded-full border border-[#8D5833] flex items-center justify-center text-[#8D5833] font-serif text-xl bg-[#0d0705] group-hover:bg-[#8D5833] group-hover:text-white transition-colors duration-300">02</div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-[#8D5833] absolute -bottom-6"></div>
+                </div>
+                
+                <div class="md:w-[45%] md:pr-16 w-full md:text-right">
+                    <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#8D5833] mb-3 block">The Selection</span>
+                    <h3 class="text-3xl font-serif text-white mb-4 group-hover:text-[#8D5833] transition-colors duration-300">Handpicked Quality</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Only the ripest cherries make the cut. We handpick and select the best beans to ensure exceptional quality in every batch.</p>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="flex flex-col md:flex-row items-center justify-between mb-20 md:mb-32 relative group">
+                <div class="md:w-[45%] mb-8 md:mb-0 w-full">
+                    <img src="assets/Journey/Journey_3.webp" alt="Roast" class="w-full h-64 object-cover rounded-2xl shadow-2xl border border-[#4a3227]/50 group-hover:border-[#8D5833] transition-colors duration-500">
+                </div>
+                
+                <div class="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center hidden md:flex z-10 bg-[#0d0705] py-4">
+                    <div class="w-14 h-14 rounded-full border border-[#8D5833] flex items-center justify-center text-[#8D5833] font-serif text-xl bg-[#0d0705] group-hover:bg-[#8D5833] group-hover:text-white transition-colors duration-300">03</div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-[#8D5833] absolute -bottom-6"></div>
+                </div>
+                
+                <div class="md:w-[45%] md:pl-16 w-full">
+                    <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#8D5833] mb-3 block">The Roast</span>
+                    <h3 class="text-3xl font-serif text-white mb-4 group-hover:text-[#8D5833] transition-colors duration-300">Roasted to Perfection</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Our expert roasters bring out the unique character of each bean. Every roast is crafted to deliver rich aroma, balanced flavor, and a memorable experience.</p>
+                </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="flex flex-col md:flex-row-reverse items-center justify-between mb-20 md:mb-32 relative group">
+                <div class="md:w-[45%] mb-8 md:mb-0 w-full">
+                    <img src="assets/Journey/Journey_4.webp" alt="Craft" class="w-full h-64 object-cover rounded-2xl shadow-2xl border border-[#4a3227]/50 group-hover:border-[#8D5833] transition-colors duration-500">
+                </div>
+                
+                <div class="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center hidden md:flex z-10 bg-[#0d0705] py-4">
+                    <div class="w-14 h-14 rounded-full border border-[#8D5833] flex items-center justify-center text-[#8D5833] font-serif text-xl bg-[#0d0705] group-hover:bg-[#8D5833] group-hover:text-white transition-colors duration-300">04</div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-[#8D5833] absolute -bottom-6"></div>
+                </div>
+                
+                <div class="md:w-[45%] md:pr-16 w-full md:text-right">
+                    <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#8D5833] mb-3 block">The Craft</span>
+                    <h3 class="text-3xl font-serif text-white mb-4 group-hover:text-[#8D5833] transition-colors duration-300">Blended with Expertise</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">We blend beans from different origins to create signature profiles that suit every coffee lover's taste.</p>
+                </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="flex flex-col md:flex-row items-center justify-between mb-20 md:mb-32 relative group">
+                <div class="md:w-[45%] mb-8 md:mb-0 w-full">
+                    <img src="assets/Journey/Journey_5.webp" alt="Experience" class="w-full h-64 object-cover rounded-2xl shadow-2xl border border-[#4a3227]/50 group-hover:border-[#8D5833] transition-colors duration-500">
+                </div>
+                
+                <div class="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center hidden md:flex z-10 bg-[#0d0705] py-4">
+                    <div class="w-14 h-14 rounded-full border border-[#8D5833] flex items-center justify-center text-[#8D5833] font-serif text-xl bg-[#0d0705] group-hover:bg-[#8D5833] group-hover:text-white transition-colors duration-300">05</div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-[#8D5833] absolute -bottom-6"></div>
+                </div>
+                
+                <div class="md:w-[45%] md:pl-16 w-full">
+                    <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#8D5833] mb-3 block">The Experience</span>
+                    <h3 class="text-3xl font-serif text-white mb-4 group-hover:text-[#8D5833] transition-colors duration-300">Brewed for You</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">From the first sip to the last drop, our coffee is brewed to bring warmth, comfort, and joy to your everyday moments.</p>
+                </div>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="flex flex-col md:flex-row-reverse items-center justify-between mb-20 relative group">
+                <div class="md:w-[45%] mb-8 md:mb-0 w-full">
+                    <img src="assets/Journey/Journey_6.webp" alt="Promise" class="w-full h-64 object-cover rounded-2xl shadow-2xl border border-[#4a3227]/50 group-hover:border-[#8D5833] transition-colors duration-500">
+                </div>
+                
+                <div class="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center hidden md:flex z-10 bg-[#0d0705] py-4">
+                    <div class="w-14 h-14 rounded-full border border-[#8D5833] flex items-center justify-center text-[#8D5833] font-serif text-xl bg-[#0d0705] group-hover:bg-[#8D5833] group-hover:text-white transition-colors duration-300">06</div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-[#8D5833] absolute -bottom-6"></div>
+                </div>
+                
+                <div class="md:w-[45%] md:pr-16 w-full md:text-right">
+                    <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#8D5833] mb-3 block">The Promise</span>
+                    <h3 class="text-3xl font-serif text-white mb-4 group-hover:text-[#8D5833] transition-colors duration-300">A Commitment That Continues</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed">Our journey doesn't end here. We continue to innovate, improve, and stay committed to quality, sustainability, and you.</p>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Bottom Footer Box -->
+        <div class="container mx-auto px-6 lg:px-12 max-w-[1000px] mt-16 relative z-10">
+            <div class="border border-[#4a3227] rounded-xl p-8 flex flex-col md:flex-row justify-between items-center gap-8 bg-[#140a06] group hover:border-[#8D5833] transition-colors duration-500">
+                <div class="flex items-center gap-6">
+                    <i data-lucide="leaf" class="w-8 h-8 text-[#8D5833] flex-shrink-0"></i>
+                    <p class="text-xs text-gray-400 leading-relaxed">It's not just about coffee.<br>It's about <span class="text-[#8D5833]">people, passion</span>, and <span class="text-[#8D5833]">purpose</span>.</p>
+                </div>
+                <div class="flex items-center gap-6">
+                    <p class="font-serif italic text-2xl text-gray-300 md:text-right">Thank you for being<br>part of our journey.</p>
+                    <i data-lucide="coffee" class="w-10 h-10 text-[#8D5833] stroke-1 flex-shrink-0"></i>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Menu Section -->
-    <section id="menu" class="menu-bg py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="heading-font text-4xl md:text-5xl font-bold text-amber-900 mb-4">Our Menu</h2>
-                <p class="text-amber-800 max-w-2xl mx-auto">From classic espresso to innovative seasonal creations, every drink is crafted with precision and passion.</p>
-                <div class="w-24 h-1 bg-amber-500 mx-auto mt-4"></div>
+    <!-- Locations Interactive Section -->
+    <section id="locations-interactive" class="w-full bg-[#F4EFEB] relative z-20">
+
+        <!-- DESKTOP: Full-screen pinned slider (hidden on mobile) -->
+        <div class="hidden md:block h-screen overflow-hidden relative">
+
+            <!-- Top Right Fixed Elements -->
+            <div class="absolute top-28 right-8 md:right-12 flex gap-6 text-[#2c1e16] z-50">
+                <a href="#" class="hover:text-[#8D5833] transition-colors"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="hover:text-[#8D5833] transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="hover:text-[#8D5833] transition-colors"><i class="fas fa-map-marker-alt"></i></a>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Coffee Item 1 -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all hover:scale-105 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1561047029-3000c68339ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                             alt="Espresso" 
-                             class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-amber-900">Classic Espresso</h3>
-                            <span class="text-amber-700 font-bold">$3.50</span>
-                        </div>
-                        <p class="text-gray-600 mb-4">Our signature blend, rich and bold with notes of dark chocolate and caramel.</p>
-                        <button class="w-full bg-amber-100 hover:bg-amber-200 text-amber-800 py-2 rounded-lg transition-colors font-medium">
-                            Add to Order
-                        </button>
-                    </div>
+
+            <!-- Center Pagination Dots -->
+            <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col gap-4 z-50">
+                <div class="location-dot w-12 h-12 rounded-full bg-white shadow-lg cursor-pointer overflow-hidden border-2 border-white transition-all transform scale-125">
+                    <img src="assets/location/shop_1.webp" class="w-full h-full object-cover" alt="Dot 1">
                 </div>
-                
-                <!-- Coffee Item 2 -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all hover:scale-105 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                             alt="Cappuccino" 
-                             class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-amber-900">Velvet Cappuccino</h3>
-                            <span class="text-amber-700 font-bold">$4.75</span>
-                        </div>
-                        <p class="text-gray-600 mb-4">Perfectly steamed milk over our rich espresso, topped with delicate foam.</p>
-                        <button class="w-full bg-amber-100 hover:bg-amber-200 text-amber-800 py-2 rounded-lg transition-colors font-medium">
-                            Add to Order
-                        </button>
-                    </div>
+                <div class="location-dot w-12 h-12 rounded-full bg-white shadow-md cursor-pointer overflow-hidden border-2 border-transparent hover:border-white transition-all opacity-50 grayscale">
+                    <img src="assets/location/shop_2.webp" class="w-full h-full object-cover" alt="Dot 2">
                 </div>
-                
-                <!-- Coffee Item 3 -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all hover:scale-105 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                             alt="Cold Brew" 
-                             class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-amber-900">Artisan Cold Brew</h3>
-                            <span class="text-amber-700 font-bold">$5.25</span>
+                <div class="location-dot w-12 h-12 rounded-full bg-white shadow-md cursor-pointer overflow-hidden border-2 border-transparent hover:border-white transition-all opacity-50 grayscale">
+                    <img src="assets/location/shop_3.webp" class="w-full h-full object-cover" alt="Dot 3">
+                </div>
+            </div>
+
+            <!-- Bottom Right Scroll Arrows -->
+            <div class="absolute bottom-10 right-10 flex flex-col items-center gap-6 text-gray-400 z-50">
+                <i data-lucide="arrow-up" id="loc-arrow-up" class="w-5 h-5 cursor-pointer hover:text-[#2c1e16] transition-colors"></i>
+                <div class="w-px h-12 bg-gray-300"></div>
+                <i data-lucide="arrow-down" id="loc-arrow-down" class="w-5 h-5 cursor-pointer hover:text-[#2c1e16] transition-colors"></i>
+            </div>
+
+            <!-- LOCATION 1 SLIDE -->
+            <div class="full-screen-slide absolute inset-0 w-full h-full flex flex-row z-10">
+                <div class="slide-img w-1/2 h-full relative overflow-hidden bg-cover bg-center" style="background-image: url('assets/location/shop_1.webp')"></div>
+                <div class="slide-content w-1/2 h-full py-32 px-16 xl:px-24 bg-[#F4EFEB] overflow-y-auto">
+                    <div class="flex flex-col justify-center h-full">
+                        <div class="text-sm font-serif italic text-gray-500 mb-6 flex items-center">
+                            <span class="text-xl text-[#2c1e16]">01</span><span class="mx-2 text-[#8D5833]">/</span><span class="text-sm mt-2">03</span>
                         </div>
-                        <p class="text-gray-600 mb-4">Slow-steeped for 18 hours for a smooth, less acidic flavor with hints of nuts and cocoa.</p>
-                        <button class="w-full bg-amber-100 hover:bg-amber-200 text-amber-800 py-2 rounded-lg transition-colors font-medium">
-                            Add to Order
-                        </button>
+                        <div class="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#8D5833] mb-4">
+                            <i data-lucide="map-pin" class="w-3 h-3"></i><span>Our Location</span>
+                        </div>
+                        <h2 class="text-5xl xl:text-6xl font-serif text-[#2c1e16] mb-6 leading-tight">Buenos Aires<br>Palermo</h2>
+                        <p class="text-gray-600 mb-8 max-w-sm leading-relaxed text-sm">Our original flagship location in the heart of Palermo, where traditional roasting meets modern coffee artistry.</p>
+                        <div class="space-y-5 mb-8">
+                            <div class="flex items-start gap-4"><i data-lucide="clock" class="w-5 h-5 text-[#2c1e16] mt-1 shrink-0"></i><div><h4 class="text-[10px] font-bold tracking-[0.15em] uppercase text-[#2c1e16] mb-1">Opening Hours</h4><p class="text-sm text-gray-600">Mon - Sun: 7:00 AM - 10:00 PM</p></div></div>
+                            <div class="w-full max-w-sm h-px bg-gray-300"></div>
+                            <div class="flex items-start gap-4"><i data-lucide="map-pin" class="w-5 h-5 text-[#2c1e16] mt-1 shrink-0"></i><div><h4 class="text-[10px] font-bold tracking-[0.15em] uppercase text-[#2c1e16] mb-1">Address</h4><p class="text-sm text-gray-600">Av. Santa Fe 3251,<br>Buenos Aires - 1425</p></div></div>
+                            <div class="w-full max-w-sm h-px bg-gray-300"></div>
+                            <div class="flex items-start gap-4"><i data-lucide="phone" class="w-5 h-5 text-[#2c1e16] mt-1 shrink-0"></i><div><h4 class="text-[10px] font-bold tracking-[0.15em] uppercase text-[#2c1e16] mb-1">Contact</h4><p class="text-sm text-gray-600">+54 11 4821 1234</p></div></div>
+                        </div>
+                        <a href="#" class="inline-flex items-center gap-4 bg-[#2c1e16] hover:bg-[#8D5833] text-white px-8 py-4 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors">Visit This Store <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
                     </div>
                 </div>
             </div>
-            
-            <div class="text-center mt-12">
-                <button class="bg-amber-800 hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105">
-                    View Full Menu
-                </button>
+
+            <!-- LOCATION 2 SLIDE -->
+            <div class="full-screen-slide absolute inset-0 w-full h-full flex flex-row-reverse z-20 opacity-0 translate-y-full">
+                <div class="slide-img w-1/2 h-full relative overflow-hidden bg-cover bg-center" style="background-image: url('assets/location/shop_2.webp')"></div>
+                <div class="slide-content w-1/2 h-full py-32 px-16 xl:px-24 bg-[#F4EFEB] overflow-y-auto">
+                    <div class="flex flex-col justify-center h-full">
+                        <div class="text-sm font-serif italic text-gray-500 mb-6 flex items-center">
+                            <span class="text-xl text-[#2c1e16]">02</span><span class="mx-2 text-[#8D5833]">/</span><span class="text-sm mt-2">03</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#8D5833] mb-4">
+                            <i data-lucide="map-pin" class="w-3 h-3"></i><span>Our Location</span>
+                        </div>
+                        <h2 class="text-5xl xl:text-6xl font-serif text-[#2c1e16] mb-6 leading-tight">New York<br>SoHo</h2>
+                        <p class="text-gray-600 mb-8 max-w-sm leading-relaxed text-sm">Industrial chic meets coffee mastery in the heart of Manhattan. A perfect stop during your city explorations.</p>
+                        <div class="space-y-5 mb-8">
+                            <div class="flex items-start gap-4"><i data-lucide="clock" class="w-5 h-5 text-[#2c1e16] mt-1 shrink-0"></i><div><h4 class="text-[10px] font-bold tracking-[0.15em] uppercase text-[#2c1e16] mb-1">Opening Hours</h4><p class="text-sm text-gray-600">Mon - Fri: 6:00 AM - 9:00 PM<br>Weekends: 7:00 AM - 10:00 PM</p></div></div>
+                            <div class="w-full max-w-sm h-px bg-gray-300"></div>
+                            <div class="flex items-start gap-4"><i data-lucide="map-pin" class="w-5 h-5 text-[#2c1e16] mt-1 shrink-0"></i><div><h4 class="text-[10px] font-bold tracking-[0.15em] uppercase text-[#2c1e16] mb-1">Address</h4><p class="text-sm text-gray-600">456 Broadway,<br>New York, NY - 10013</p></div></div>
+                            <div class="w-full max-w-sm h-px bg-gray-300"></div>
+                            <div class="flex items-start gap-4"><i data-lucide="phone" class="w-5 h-5 text-[#2c1e16] mt-1 shrink-0"></i><div><h4 class="text-[10px] font-bold tracking-[0.15em] uppercase text-[#2c1e16] mb-1">Contact</h4><p class="text-sm text-gray-600">+1 212 555 0199</p></div></div>
+                        </div>
+                        <a href="#" class="inline-flex items-center gap-4 bg-[#2c1e16] hover:bg-[#8D5833] text-white px-8 py-4 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors">Visit This Store <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOCATION 3 SLIDE -->
+            <div class="full-screen-slide absolute inset-0 w-full h-full flex flex-row z-30 opacity-0 translate-y-full">
+                <div class="slide-img w-1/2 h-full relative overflow-hidden bg-cover bg-center" style="background-image: url('assets/location/shop_3.webp')"></div>
+                <div class="slide-content w-1/2 h-full py-32 px-16 xl:px-24 bg-[#F4EFEB] overflow-y-auto">
+                    <div class="flex flex-col justify-center h-full">
+                        <div class="text-sm font-serif italic text-gray-500 mb-6 flex items-center">
+                            <span class="text-xl text-[#2c1e16]">03</span><span class="mx-2 text-[#8D5833]">/</span><span class="text-sm mt-2">03</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#8D5833] mb-4">
+                            <i data-lucide="map-pin" class="w-3 h-3"></i><span>Our Location</span>
+                        </div>
+                        <h2 class="text-5xl xl:text-6xl font-serif text-[#2c1e16] mb-6 leading-tight">Tokyo<br>Ginza</h2>
+                        <p class="text-gray-600 mb-8 max-w-sm leading-relaxed text-sm">Minimalist design with traditional Japanese elements in the upscale Ginza district. Experience tranquility in a cup.</p>
+                        <div class="space-y-5 mb-8">
+                            <div class="flex items-start gap-4"><i data-lucide="clock" class="w-5 h-5 text-[#2c1e16] mt-1 shrink-0"></i><div><h4 class="text-[10px] font-bold tracking-[0.15em] uppercase text-[#2c1e16] mb-1">Opening Hours</h4><p class="text-sm text-gray-600">Mon - Sun: 8:00 AM - 8:00 PM</p></div></div>
+                            <div class="w-full max-w-sm h-px bg-gray-300"></div>
+                            <div class="flex items-start gap-4"><i data-lucide="map-pin" class="w-5 h-5 text-[#2c1e16] mt-1 shrink-0"></i><div><h4 class="text-[10px] font-bold tracking-[0.15em] uppercase text-[#2c1e16] mb-1">Address</h4><p class="text-sm text-gray-600">Ginza 6-chōme, Chūō-ku,<br>Tokyo - 104-0061</p></div></div>
+                            <div class="w-full max-w-sm h-px bg-gray-300"></div>
+                            <div class="flex items-start gap-4"><i data-lucide="phone" class="w-5 h-5 text-[#2c1e16] mt-1 shrink-0"></i><div><h4 class="text-[10px] font-bold tracking-[0.15em] uppercase text-[#2c1e16] mb-1">Contact</h4><p class="text-sm text-gray-600">+81 3 3562 1111</p></div></div>
+                        </div>
+                        <a href="#" class="inline-flex items-center gap-4 bg-[#2c1e16] hover:bg-[#8D5833] text-white px-8 py-4 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors">Visit This Store <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOBILE / TABLET: Stacked cards (visible only below md) -->
+        <div class="md:hidden py-16 px-5 space-y-12">
+            <div class="text-center mb-10">
+                <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-[#8D5833] mb-3 block">Our Locations</span>
+                <h2 class="text-4xl font-serif text-[#2c1e16] leading-tight">Find Us<br><span class="text-[#8D5833]">Around the World</span></h2>
+            </div>
+
+            <!-- Mobile Card 1 -->
+            <div class="rounded-2xl overflow-hidden shadow-xl bg-white">
+                <div class="h-56 bg-cover bg-center" style="background-image: url('assets/location/shop_1.webp')"></div>
+                <div class="p-6">
+                    <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#8D5833] mb-2 block">01 / 03 · Buenos Aires</span>
+                    <h3 class="text-2xl font-serif text-[#2c1e16] mb-3">Palermo</h3>
+                    <p class="text-sm text-gray-500 mb-5 leading-relaxed">Our original flagship location in the heart of Palermo, where traditional roasting meets modern coffee artistry.</p>
+                    <div class="space-y-3 text-sm text-gray-600 mb-6">
+                        <div class="flex items-center gap-3"><i data-lucide="clock" class="w-4 h-4 text-[#8D5833] shrink-0"></i><span>Mon–Sun: 7:00 AM – 10:00 PM</span></div>
+                        <div class="flex items-center gap-3"><i data-lucide="map-pin" class="w-4 h-4 text-[#8D5833] shrink-0"></i><span>Av. Santa Fe 3251, Buenos Aires</span></div>
+                        <div class="flex items-center gap-3"><i data-lucide="phone" class="w-4 h-4 text-[#8D5833] shrink-0"></i><span>+54 11 4821 1234</span></div>
+                    </div>
+                    <a href="#" class="inline-flex items-center gap-3 bg-[#2c1e16] hover:bg-[#8D5833] text-white px-6 py-3 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors rounded-sm">Visit Store <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+                </div>
+            </div>
+
+            <!-- Mobile Card 2 -->
+            <div class="rounded-2xl overflow-hidden shadow-xl bg-white">
+                <div class="h-56 bg-cover bg-center" style="background-image: url('assets/location/shop_2.webp')"></div>
+                <div class="p-6">
+                    <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#8D5833] mb-2 block">02 / 03 · New York</span>
+                    <h3 class="text-2xl font-serif text-[#2c1e16] mb-3">SoHo</h3>
+                    <p class="text-sm text-gray-500 mb-5 leading-relaxed">Industrial chic meets coffee mastery in the heart of Manhattan.</p>
+                    <div class="space-y-3 text-sm text-gray-600 mb-6">
+                        <div class="flex items-center gap-3"><i data-lucide="clock" class="w-4 h-4 text-[#8D5833] shrink-0"></i><span>Mon–Fri: 6AM–9PM · Weekends: 7AM–10PM</span></div>
+                        <div class="flex items-center gap-3"><i data-lucide="map-pin" class="w-4 h-4 text-[#8D5833] shrink-0"></i><span>456 Broadway, New York, NY 10013</span></div>
+                        <div class="flex items-center gap-3"><i data-lucide="phone" class="w-4 h-4 text-[#8D5833] shrink-0"></i><span>+1 212 555 0199</span></div>
+                    </div>
+                    <a href="#" class="inline-flex items-center gap-3 bg-[#2c1e16] hover:bg-[#8D5833] text-white px-6 py-3 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors rounded-sm">Visit Store <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+                </div>
+            </div>
+
+            <!-- Mobile Card 3 -->
+            <div class="rounded-2xl overflow-hidden shadow-xl bg-white">
+                <div class="h-56 bg-cover bg-center" style="background-image: url('assets/location/shop_3.webp')"></div>
+                <div class="p-6">
+                    <span class="text-[10px] font-bold tracking-[0.2em] uppercase text-[#8D5833] mb-2 block">03 / 03 · Tokyo</span>
+                    <h3 class="text-2xl font-serif text-[#2c1e16] mb-3">Ginza</h3>
+                    <p class="text-sm text-gray-500 mb-5 leading-relaxed">Minimalist design with traditional Japanese elements in the upscale Ginza district.</p>
+                    <div class="space-y-3 text-sm text-gray-600 mb-6">
+                        <div class="flex items-center gap-3"><i data-lucide="clock" class="w-4 h-4 text-[#8D5833] shrink-0"></i><span>Mon–Sun: 8:00 AM – 8:00 PM</span></div>
+                        <div class="flex items-center gap-3"><i data-lucide="map-pin" class="w-4 h-4 text-[#8D5833] shrink-0"></i><span>Ginza 6-chōme, Chūō-ku, Tokyo</span></div>
+                        <div class="flex items-center gap-3"><i data-lucide="phone" class="w-4 h-4 text-[#8D5833] shrink-0"></i><span>+81 3 3562 1111</span></div>
+                    </div>
+                    <a href="#" class="inline-flex items-center gap-3 bg-[#2c1e16] hover:bg-[#8D5833] text-white px-6 py-3 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors rounded-sm">Visit Store <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+                </div>
             </div>
         </div>
     </section>
-
-    <!-- Locations Section -->
-    <section id="locations" class="py-20 bg-amber-900 text-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="heading-font text-4xl md:text-5xl font-bold mb-4">Our Locations</h2>
-                <p class="text-amber-200 max-w-2xl mx-auto">Find your perfect coffee spot at one of our beautifully designed locations around the world.</p>
-                <div class="w-24 h-1 bg-amber-400 mx-auto mt-4"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Location 1 -->
-                <div class="bg-amber-800 rounded-2xl overflow-hidden shadow-lg transform transition-all hover:scale-105">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                             alt="Buenos Aires Location" 
-                             class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Buenos Aires Flagship</h3>
-                        <p class="text-amber-200 mb-4">Our original location in the heart of Palermo, featuring our roasting facility.</p>
-                        <div class="flex items-center text-amber-300 mb-2">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span>Av. Santa Fe 3251, Buenos Aires</span>
-                        </div>
-                        <div class="flex items-center text-amber-300">
-                            <i class="fas fa-clock mr-2"></i>
-                            <span>Mon-Sun: 7am - 10pm</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Location 2 -->
-                <div class="bg-amber-800 rounded-2xl overflow-hidden shadow-lg transform transition-all hover:scale-105">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                             alt="New York Location" 
-                             class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">New York SoHo</h3>
-                        <p class="text-amber-200 mb-4">Industrial chic meets coffee artistry in the heart of Manhattan.</p>
-                        <div class="flex items-center text-amber-300 mb-2">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span>456 Broadway, New York, NY</span>
-                        </div>
-                        <div class="flex items-center text-amber-300">
-                            <i class="fas fa-clock mr-2"></i>
-                            <span>Mon-Fri: 6am - 9pm, Weekends: 7am - 10pm</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Location 3 -->
-                <div class="bg-amber-800 rounded-2xl overflow-hidden shadow-lg transform transition-all hover:scale-105">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                             alt="Tokyo Location" 
-                             class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Tokyo Ginza</h3>
-                        <p class="text-amber-200 mb-4">Minimalist design with traditional Japanese elements in the upscale Ginza district.</p>
-                        <div class="flex items-center text-amber-300 mb-2">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span>Ginza 6-chōme, Chūō-ku, Tokyo</span>
-                        </div>
-                        <div class="flex items-center text-amber-300">
-                            <i class="fas fa-clock mr-2"></i>
-                            <span>Mon-Sun: 8am - 8pm</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-12">
-                <button class="bg-amber-500 hover:bg-amber-400 text-amber-900 font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105">
-                    View All Locations
-                </button>
+        
+    <!-- CTA Banner Section -->
+    <section class="bg-[#FCFAF8] pt-20 px-6 lg:px-12">
+        <div class="container mx-auto max-w-6xl">
+            <div class="w-full overflow-hidden rounded-2xl shadow-2xl">
+                <img src="assets/Banner/Banner.webp" alt="Let's Talk - Reach Out to Us" class="w-full h-auto block">
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="heading-font text-4xl md:text-5xl font-bold text-amber-900 mb-4">Get In Touch</h2>
-                <p class="text-gray-700 max-w-2xl mx-auto">Have questions about our coffee, locations, or catering services? We'd love to hear from you.</p>
-                <div class="w-24 h-1 bg-amber-500 mx-auto mt-4"></div>
-            </div>
-            
-            <div class="flex flex-col md:flex-row gap-12">
-                <div class="md:w-1/2">
-                    <form class="space-y-6">
-                        <div>
-                            <label for="name" class="block text-amber-900 font-medium mb-2">Your Name</label>
-                            <input type="text" id="name" class="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="John Doe">
+    <section id="contact" class="pt-16 pb-24 bg-[#FCFAF8]">
+        <div class="container mx-auto px-6 lg:px-12 max-w-6xl">
+            <div class="flex flex-col lg:flex-row gap-16 lg:gap-24">
+                
+                <!-- Left: Form -->
+                <div class="lg:w-[55%] flex flex-col items-start">
+                    <span class="text-[#8D5833] text-[10px] font-bold uppercase tracking-[0.15em] mb-4">Get In Touch</span>
+                    <h2 class="text-5xl md:text-6xl font-serif text-[#2c1e16] mb-6 tracking-tight">Contact Us</h2>
+                    <p class="text-gray-600 mb-10 text-sm leading-relaxed max-w-md">
+                        We'd love to hear from you! Whether it's a question, feedback, or just a friendly hello.
+                    </p>
+                    
+                    <form class="w-full space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input type="text" placeholder="Full Name" class="w-full px-4 py-4 bg-transparent border border-gray-200 rounded-md focus:outline-none focus:border-[#8D5833] transition-colors text-sm text-gray-700 placeholder-gray-500">
+                            <input type="email" placeholder="Email Address" class="w-full px-4 py-4 bg-transparent border border-gray-200 rounded-md focus:outline-none focus:border-[#8D5833] transition-colors text-sm text-gray-700 placeholder-gray-500">
                         </div>
+                        <input type="tel" placeholder="Phone Number" class="w-full px-4 py-4 bg-transparent border border-gray-200 rounded-md focus:outline-none focus:border-[#8D5833] transition-colors text-sm text-gray-700 placeholder-gray-500">
+                        <input type="text" placeholder="Subject" class="w-full px-4 py-4 bg-transparent border border-gray-200 rounded-md focus:outline-none focus:border-[#8D5833] transition-colors text-sm text-gray-700 placeholder-gray-500">
+                        <textarea placeholder="Your Message" rows="5" class="w-full px-4 py-4 bg-transparent border border-gray-200 rounded-md focus:outline-none focus:border-[#8D5833] transition-colors text-sm text-gray-700 placeholder-gray-500 resize-y"></textarea>
                         
-                        <div>
-                            <label for="email" class="block text-amber-900 font-medium mb-2">Email Address</label>
-                            <input type="email" id="email" class="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="john@example.com">
-                        </div>
-                        
-                        <div>
-                            <label for="message" class="block text-amber-900 font-medium mb-2">Your Message</label>
-                            <textarea id="message" rows="5" class="w-full px-4 py-3 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Tell us how we can help..."></textarea>
-                        </div>
-                        
-                        <button type="submit" class="w-full bg-amber-800 hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-lg transition-all transform hover:scale-105">
-                            Send Message
+                        <button type="submit" class="mt-6 bg-[#2c1e16] hover:bg-[#8D5833] text-white px-8 py-4 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors flex items-center gap-3 rounded-md">
+                            Send Message <i data-lucide="send" class="w-4 h-4"></i>
                         </button>
                     </form>
                 </div>
                 
-                <div class="md:w-1/2">
-                    <div class="bg-amber-50 rounded-2xl p-8 h-full">
-                        <h3 class="text-2xl font-bold text-amber-900 mb-6">Contact Information</h3>
-                        
-                        <div class="space-y-6">
-                            <div class="flex items-start">
-                                <div class="bg-amber-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-map-marker-alt text-amber-700"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-amber-900">Our Main Office</h4>
-                                    <p class="text-amber-800">Av. Santa Fe 3251, Buenos Aires, Argentina</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="bg-amber-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-phone text-amber-700"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-amber-900">Phone Number</h4>
-                                    <p class="text-amber-800">+1 (555) 123-4567</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="bg-amber-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-envelope text-amber-700"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-amber-900">Email Address</h4>
-                                    <p class="text-amber-800">hello@carlosbrothers.com</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="bg-amber-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-clock text-amber-700"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-amber-900">Business Hours</h4>
-                                    <p class="text-amber-800">Monday - Friday: 9am - 6pm<br>Saturday: 10am - 4pm</p>
-                                </div>
-                            </div>
+                <!-- Vertical Divider (Desktop only) -->
+                <div class="hidden lg:block w-px bg-gray-200"></div>
+                
+                <!-- Right: Info Details -->
+                <div class="lg:w-[40%] grid grid-cols-1 md:grid-cols-2 lg:flex lg:flex-col justify-center gap-10 lg:gap-0 lg:space-y-12 lg:pl-6">
+                    <!-- Location -->
+                    <div class="flex items-start gap-5 lg:gap-6">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#EAE3D9] flex items-center justify-center shrink-0">
+                            <i data-lucide="map-pin" class="w-4 h-4 md:w-5 md:h-5 text-[#4a3227]"></i>
                         </div>
-                        
-                        <div class="mt-8 pt-8 border-t border-amber-200">
-                            <h4 class="font-bold text-amber-900 mb-4">Follow Us</h4>
-                            <div class="flex space-x-4">
-                                <a href="#" class="bg-amber-100 hover:bg-amber-200 text-amber-800 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                <a href="#" class="bg-amber-100 hover:bg-amber-200 text-amber-800 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                                <a href="#" class="bg-amber-100 hover:bg-amber-200 text-amber-800 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
-                                    <i class="fab fa-twitter"></i>
-                                </a>
-                                <a href="#" class="bg-amber-100 hover:bg-amber-200 text-amber-800 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
-                                    <i class="fab fa-tiktok"></i>
-                                </a>
-                            </div>
+                        <div>
+                            <h4 class="text-[10px] font-bold tracking-[0.15em] uppercase text-[#2c1e16] mb-2 md:mt-1">Our Location</h4>
+                            <p class="text-sm text-gray-600 leading-relaxed">7th Block, 80 Feet Road,<br>Koramangala,<br>Bangalore - 560034</p>
+                        </div>
+                    </div>
+                    <!-- Phone -->
+                    <div class="flex items-start gap-5 lg:gap-6">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#EAE3D9] flex items-center justify-center shrink-0">
+                            <i data-lucide="phone" class="w-4 h-4 md:w-5 md:h-5 text-[#4a3227]"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-[10px] font-bold tracking-[0.15em] uppercase text-[#2c1e16] mb-2 md:mt-1">Phone</h4>
+                            <p class="text-sm text-gray-600">+91 98453 21098</p>
+                        </div>
+                    </div>
+                    <!-- Email -->
+                    <div class="flex items-start gap-5 lg:gap-6">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#EAE3D9] flex items-center justify-center shrink-0">
+                            <i data-lucide="mail" class="w-4 h-4 md:w-5 md:h-5 text-[#4a3227]"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-[10px] font-bold tracking-[0.15em] uppercase text-[#2c1e16] mb-2 md:mt-1">Email</h4>
+                            <p class="text-sm text-gray-600 break-all md:break-normal">hello@thirdwavecoffee.in</p>
+                        </div>
+                    </div>
+                    <!-- Opening Hours -->
+                    <div class="flex items-start gap-5 lg:gap-6">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#EAE3D9] flex items-center justify-center shrink-0">
+                            <i data-lucide="clock" class="w-4 h-4 md:w-5 md:h-5 text-[#4a3227]"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-[10px] font-bold tracking-[0.15em] uppercase text-[#2c1e16] mb-2 md:mt-1">Opening Hours</h4>
+                            <p class="text-sm text-gray-600">Mon – Sun<br>7:30 AM – 10:30 PM</p>
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-amber-950 text-amber-200 py-12">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-amber-700 flex items-center justify-center mr-3">
-                            <i class="fas fa-coffee text-amber-100 text-lg"></i>
+    <footer class="bg-[#100906] pt-24 pb-8 text-gray-400 relative overflow-hidden border-t border-[#4a3227]/30">
+        <!-- Background Image (Right) -->
+        <div class="absolute inset-y-0 right-[-10%] w-[60%] pointer-events-none z-0 hidden lg:block" style="-webkit-mask-image: radial-gradient(circle at 60% 50%, black 40%, transparent 70%); mask-image: radial-gradient(circle at 60% 50%, black 40%, transparent 70%);">
+            <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=1000&q=80" alt="Coffee Footer" class="w-full h-full object-cover opacity-40">
+        </div>
+        
+        <div class="container mx-auto px-6 lg:px-12 max-w-[1400px] relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-20">
+                <!-- Column 1: Brand -->
+                <div class="lg:col-span-4 flex flex-col items-center lg:items-center lg:border-r border-[#4a3227]/30 lg:pr-12">
+                    <div class="flex flex-col items-center mb-6 w-max">
+                        <!-- Leaf Logo SVG -->
+                        <div class="flex gap-1 mb-4 text-[#8D5833]">
+                            <svg viewBox="0 0 24 24" class="w-14 h-14 text-[#8D5833]" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22v-5"/>
+                                <path d="M12 17c-2.5-1-4-3.5-4-6-1.5 0-3 1-3 3s1.5 3 3 3"/>
+                                <path d="M12 17c2.5-1 4-3.5 4-6 1.5 0 3 1 3 3s-1.5 3-3 3"/>
+                                <path d="M12 17c0-3 1.5-5.5 1.5-8-1.5 0-3 1-3 3 0 2.5 1.5 5 1.5 5"/>
+                            </svg>
                         </div>
-                        <h2 class="heading-font text-2xl font-bold text-amber-100">Carlos Brothers</h2>
+                        <h2 class="text-2xl font-serif text-[#8D5833] tracking-widest mb-2">BREW HAVEN</h2>
+                        <div class="flex items-center gap-3 text-[#8D5833]">
+                            <div class="w-4 h-px bg-[#8D5833]"></div>
+                            <span class="text-[9px] tracking-[0.3em] font-bold">COFFEE CO.</span>
+                            <div class="w-4 h-px bg-[#8D5833]"></div>
+                        </div>
                     </div>
-                    <p class="mt-2 text-amber-400">Crafting exceptional coffee since 1985</p>
+                    <p class="text-gray-400 text-sm leading-relaxed text-center w-full max-w-[200px]">Crafted for moments that matter.</p>
                 </div>
                 
-                <div class="flex space-x-6">
-                    <a href="#" class="text-amber-400 hover:text-amber-300 transition-colors">Privacy Policy</a>
-                    <a href="#" class="text-amber-400 hover:text-amber-300 transition-colors">Terms of Service</a>
-                    <a href="#" class="text-amber-400 hover:text-amber-300 transition-colors">Careers</a>
+                <!-- Column 2: Quick Links -->
+                <div class="lg:col-span-3 lg:pl-8 flex flex-col items-center lg:items-start lg:border-r border-[#4a3227]/30 lg:pr-12">
+                    <h3 class="text-[#8D5833] text-sm font-bold tracking-[0.2em] uppercase mb-8">Quick Links</h3>
+                    <ul class="space-y-4 text-center lg:text-left">
+                        <li><a href="#" class="text-gray-300 hover:text-[#8D5833] transition-colors">Shop</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-[#8D5833] transition-colors">Our Story</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-[#8D5833] transition-colors">Bestsellers</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-[#8D5833] transition-colors">Brewing Guides</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-[#8D5833] transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3: Follow Us & Newsletter -->
+                <div class="md:col-span-2 lg:col-span-5 lg:pl-8 flex flex-col items-center lg:items-start">
+                    <h3 class="text-[#8D5833] text-sm font-bold tracking-[0.2em] uppercase mb-8">Follow Us</h3>
+                    <div class="flex gap-4 mb-12">
+                        <a href="#" class="w-10 h-10 rounded-full border border-gray-500 flex items-center justify-center text-gray-300 hover:border-[#8D5833] hover:text-[#8D5833] transition-all">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-gray-500 flex items-center justify-center text-gray-300 hover:border-[#8D5833] hover:text-[#8D5833] transition-all">
+                            <i class="fab fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-gray-500 flex items-center justify-center text-gray-300 hover:border-[#8D5833] hover:text-[#8D5833] transition-all">
+                            <i class="fab fa-youtube text-sm"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-gray-500 flex items-center justify-center text-gray-300 hover:border-[#8D5833] hover:text-[#8D5833] transition-all">
+                            <i class="fab fa-pinterest-p text-sm"></i>
+                        </a>
+                    </div>
+                    
+                    <h3 class="text-[#8D5833] text-sm font-bold tracking-[0.2em] uppercase mb-6">Stay in the loop</h3>
+                    <form class="flex w-full max-w-sm">
+                        <input type="email" placeholder="Enter your email" class="w-full bg-[#140a06] border border-gray-800 border-r-0 rounded-l-md px-5 py-3 text-white focus:outline-none focus:border-[#8D5833] text-sm">
+                        <button type="submit" class="bg-[#b38257] hover:bg-[#9a6a42] text-[#140a06] px-6 py-3 rounded-r-md transition-colors flex items-center justify-center">
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
             
-            <div class="border-t border-amber-800 mt-8 pt-8 text-center text-amber-500">
-                <p>&copy; 2023 Carlos Brothers Coffee Co. All rights reserved.</p>
+            <!-- Bottom Row -->
+            <div class="border-t border-[#4a3227]/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] text-gray-500">
+                <div>
+                    &copy; 2026 Brew Haven Coffee Co. All rights reserved.
+                </div>
+                <div class="flex gap-4 items-center tracking-wide">
+                    <a href="#" class="hover:text-gray-300 transition-colors">Privacy Policy</a>
+                    <span class="text-[#4a3227]">|</span>
+                    <a href="#" class="hover:text-gray-300 transition-colors">Terms of Service</a>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="leaf" class="w-3.5 h-3.5 text-[#8D5833]"></i>
+                    <span class="tracking-wide">Brewed with passion.</span>
+                    <i data-lucide="heart" class="w-3.5 h-3.5 text-[#8D5833] fill-[#8D5833]"></i>
+                </div>
             </div>
         </div>
     </footer>
@@ -437,7 +899,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <script src="script.js"></script>
     <script src="sections.js"></script>
+    <script>
+        lucide.createIcons();
+
+
+    </script>
 </body>
+</html>

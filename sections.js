@@ -320,4 +320,73 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     initBeanHeadlines();
 
+    /* ======================================================
+       3. CRAFTED ABOUT SECTION ANIMATIONS (Framer Motion Style)
+       ====================================================== */
+    const initCraftedAboutAnimations = () => {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+        const section = document.getElementById('crafted-about');
+        if (!section) return;
+
+        // Create a ScrollTrigger timeline
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: section,
+                start: 'top 75%',
+                end: 'bottom 25%',
+                // play forward on enter, reverse on leave, play on re-enter back, reverse on leave back
+                toggleActions: 'play reverse play reverse'
+            }
+        });
+
+        const leftElements = section.querySelector('.lg\\:w-\\[35\\%\\]').children;
+        const featureElements = section.querySelectorAll('.lg\\:w-\\[25\\%\\] > div');
+        const imageElement = section.querySelector('.lg\\:w-\\[40\\%\\] > div');
+        const imgInner = imageElement.querySelector('img');
+
+        // 1. Left Content Text Animation (Staggered Spring fade up)
+        tl.fromTo(leftElements,
+            { y: 50, opacity: 0, rotateX: 15 },
+            { 
+                y: 0, 
+                opacity: 1, 
+                rotateX: 0,
+                duration: 0.8, 
+                stagger: 0.15, 
+                ease: 'back.out(1.4)' // Spring-like ease
+            }
+        )
+        // 2. Middle Features (Staggered slide in)
+        .fromTo(featureElements,
+            { x: -40, opacity: 0 },
+            { 
+                x: 0, 
+                opacity: 1, 
+                duration: 0.7, 
+                stagger: 0.1, 
+                ease: 'back.out(1.2)' 
+            },
+            "-=0.6"
+        )
+        // 3. Right Image Container (Scale & Clip Reveal)
+        .fromTo(imageElement,
+            { scale: 0.85, opacity: 0, y: 30 },
+            { 
+                scale: 1, 
+                opacity: 1, 
+                y: 0,
+                duration: 1, 
+                ease: 'power3.out'
+            },
+            "-=0.8"
+        )
+        // 4. Image Parallax/Zoom effect inside container
+        .fromTo(imgInner,
+            { scale: 1.2 },
+            { scale: 1, duration: 1.2, ease: 'power3.out' },
+            "-=1"
+        );
+    };
+    initCraftedAboutAnimations();
+
 });
